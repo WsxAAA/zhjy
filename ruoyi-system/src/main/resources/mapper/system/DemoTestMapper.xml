@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.DemoTestMapper">
+
+    <resultMap type="DemoTest" id="DemoTestResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="age"    column="age"    />
+        <result property="adress"    column="adress"    />
+    </resultMap>
+
+    <sql id="selectDemoTestVo">
+        select id, name, age, adress from demo_test
+    </sql>
+
+    <select id="selectDemoTestList" parameterType="DemoTest" resultMap="DemoTestResult">
+        <include refid="selectDemoTestVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="age != null "> and age = #{age}</if>
+            <if test="adress != null  and adress != ''"> and adress = #{adress}</if>
+        </where>
+    </select>
+
+    <select id="selectDemoTestById" parameterType="Long" resultMap="DemoTestResult">
+        <include refid="selectDemoTestVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDemoTest" parameterType="DemoTest" useGeneratedKeys="true" keyProperty="id">
+        insert into demo_test
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="age != null">age,</if>
+            <if test="adress != null">adress,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="age != null">#{age},</if>
+            <if test="adress != null">#{adress},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDemoTest" parameterType="DemoTest">
+        update demo_test
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="adress != null">adress = #{adress},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDemoTestById" parameterType="Long">
+        delete from demo_test where id = #{id}
+    </delete>
+
+    <delete id="deleteDemoTestByIds" parameterType="String">
+        delete from demo_test where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
