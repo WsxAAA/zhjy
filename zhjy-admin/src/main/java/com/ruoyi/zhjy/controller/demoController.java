@@ -39,7 +39,7 @@ public class demoController extends BaseController
     private IdemoService demoService;
 
     /**
-     * 查询demo列表
+     * 查询demo列表  姚国聪到此一游00000000000000000000000000
      */
     @ApiOperation("查询demo列表s")
     @PreAuthorize("@ss.hasPermi('zhjy:demo:list')")
