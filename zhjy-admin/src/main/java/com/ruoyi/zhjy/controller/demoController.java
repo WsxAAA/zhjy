@@ -110,4 +110,8 @@ public class demoController extends BaseController
     {
         return toAjax(demoService.deletedemoByIds(ids));
     }
+
+    /**
+     * dddddd
+     */
 }
